@@ -10,7 +10,10 @@ const topLevelQuestion = [
 ]
 
 const addQuestion = [
-    {type: "input", name:"add", message:"what would you like to add"}
+    {type: "input", name:"add", message:"what would you like to add?"}
+]
+const removeQuestion = [
+    {type: "input", name:"remove", message:"what would you like to remove?"}
 ]
 
 const main = () => {
@@ -29,6 +32,8 @@ const app = async() => {
         console.log("listing notes...")
         app();
     } else if (answers.options == "remove") {
+        const answer = await inquirer.prompt(removeQuestion)
+        removeNote(answer.remove)
         console.log("removing a note...")
         app();
     } else if (answers.options == "exit") {
