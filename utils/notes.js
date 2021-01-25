@@ -1,4 +1,6 @@
 const fs = require("fs");
+const chalk = require("chalk");
+
 
 const addNote = myNote => {
     const allnotes = loadNotes();
@@ -25,7 +27,7 @@ const saveNotes = allNotes => {
 const listNotes = () => {
     const allNotes = loadNotes();
     allNotes.map((note,i) =>{
-        console.log(`${i + 1}.${note.reminder}\n`);
+        console.log(chalk.red(`${i + 1}. ${note.reminder}\n`));
     });
 };
 

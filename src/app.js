@@ -1,6 +1,7 @@
 const figlet = require('figlet');
 var inquirer = require('inquirer');
 const { addNote, removeNote, listNotes } = require('../utils/notes');
+const chalk = require("chalk");
 
 const topLevelQuestion = [
     { type: "list",
@@ -17,7 +18,7 @@ const removeQuestion = [
 ]
 
 const main = () => {
-    console.log(figlet.textSync("Reminder App v2"));
+    console.log(chalk.green(figlet.textSync("Reminder App v2", {font:'big'})));
     app()
 }
 const app = async() => {
@@ -37,7 +38,7 @@ const app = async() => {
         console.log("removing a note...")
         app();
     } else if (answers.options == "exit") {
-        console.log("Exiting...")
+        console.log("see you later...")
     } else {console.log("Invlaid command...")}
 
 }
