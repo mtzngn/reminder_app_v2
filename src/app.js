@@ -1,6 +1,6 @@
 const figlet = require('figlet');
 var inquirer = require('inquirer');
-const { addNote, removeNote, listNotes } = require('../utils/notes');
+const { addNote, removeNote, listNotes, loadNotes } = require('../utils/notes');
 const chalk = require("chalk");
 
 const topLevelQuestion = [
@@ -18,8 +18,12 @@ const categoryQuestion = [
 const addQuestion = [
     {type: "input", name:"add", message:"what would you like to add?"}
 ]
-const removeQuestion = [
-    {type: "input", name:"remove", message:"what would you like to remove?"}
+
+const removeCategory = [
+    { type: "list",
+    name: "options",
+    message: "from which category?",
+    choices: ["work", "house", "studying", "paperwork"]}
 ]
 
 const main = () => {
@@ -39,8 +43,19 @@ const app = async() => {
         console.log("listing notes...")
         app();
     } else if (answers.options == "remove") {
+        const answerCategory = await inquirer.prompt(removeCategory)
+
+        const whatToRemove = loadNotes(answerCategory.options).map((category)=>{return category.reminder})
+        const removeQuestion = [
+            { type: "list",
+            name: "options",
+            message: "which note would you like to remove",
+            choices: whatToRemove}
+        ]
+
         const answer = await inquirer.prompt(removeQuestion)
-        removeNote(answer.remove)
+        removeNote(answer.options, answerCategory.options)
+
         console.log("removing a note...")
         app();
     } else if (answers.options == "exit") {
