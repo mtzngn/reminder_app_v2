@@ -25,7 +25,8 @@ const saveNotes = (allNotes, category) => {
 }
 
 const listNotes = () => {
-    const allNotes = loadNotes();
+    const allNotes = loadNotes("house").concat(loadNotes("paperwork"),loadNotes("studying"),loadNotes("work"));
+    console.log(allNotes)
     allNotes.map((note,i) =>{
         console.log(chalk.red(`${i + 1}. ${note.reminder}\n`));
     });
