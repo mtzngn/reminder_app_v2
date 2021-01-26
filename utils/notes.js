@@ -2,16 +2,16 @@ const fs = require("fs");
 const chalk = require("chalk");
 
 
-const addNote = myNote => {
-    const allnotes = loadNotes();
+const addNote = (myNote, category) => {
+    const allnotes = loadNotes(category);
     allnotes.push({reminder: myNote});
-    saveNotes(allnotes);
+    saveNotes(allnotes, category);
     
 }
 
-const loadNotes = () =>{
+const loadNotes = (category) =>{
     try {
-        const dataBuffer = fs.readFileSync("src/notes.json");
+        const dataBuffer = fs.readFileSync(`src/${category}.json`);
         const notesJson  = dataBuffer.toString();
         return JSON.parse(notesJson);
     } catch (error){
@@ -19,9 +19,9 @@ const loadNotes = () =>{
     }
 };
 
-const saveNotes = allNotes => {
+const saveNotes = (allNotes, category) => {
     const notesJson = JSON.stringify(allNotes);
-    fs.writeFileSync("src/notes.json", notesJson);
+    fs.writeFileSync(`src/${category}.json`, notesJson);
 }
 
 const listNotes = () => {
@@ -30,6 +30,7 @@ const listNotes = () => {
         console.log(chalk.red(`${i + 1}. ${note.reminder}\n`));
     });
 };
+
 
 const removeNote = noteToDelete => {
     const allNotes = loadNotes();

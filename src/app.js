@@ -9,7 +9,12 @@ const topLevelQuestion = [
     message: "what would you like to do?",
     choices: ["add", "list", "remove", "exit"]}
 ]
-
+const categoryQuestion = [
+    { type: "list",
+    name: "options",
+    message: "what would you like to do?",
+    choices: ["work", "house", "studying", "paperwork"]}
+]
 const addQuestion = [
     {type: "input", name:"add", message:"what would you like to add?"}
 ]
@@ -24,8 +29,9 @@ const main = () => {
 const app = async() => {
     const answers = await inquirer.prompt(topLevelQuestion)
     if (answers.options == "add") {
+        const category = await inquirer.prompt(categoryQuestion)
         const answer = await inquirer.prompt(addQuestion)
-        addNote(answer.add)
+        addNote(answer.add, category.options)
         console.log("Adding a note...")
         app();
     } else if (answers.options == "list") {
